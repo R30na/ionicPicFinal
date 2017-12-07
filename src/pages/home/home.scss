@@ -1,3 +1,9 @@
 page-home {
-
+  ion-content {
+    background-color: rgba(199, 233, 255, 0.5) !important;
+  }
+  .thumbnail {
+    width: 35vw;
+    height: 20vh;
+  }
 }

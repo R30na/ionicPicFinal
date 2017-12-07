@@ -3,16 +3,101 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+    <ion-title>خانه</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <ion-fab bottom center *ngIf="showTakePicture">
+    <button ion-fab color="default" (tap)="takePicture()">
+      <ion-icon name="camera"></ion-icon>
+    </button>
+  </ion-fab>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <ion-fab top right *ngIf="showTakePicture">
+    <button ion-fab mini color="default" (tap)="rotateCam()">
+      <ion-icon name="refresh"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab top right *ngIf="!showTakePicture">
+    <button ion-fab mini color="default" (tap)="showCam()">
+      <ion-icon name="aperture"></ion-icon>
+    </button>
+  </ion-fab>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col text-center padding>
+        <ion-card *ngIf="!showTakePicture" class="thumbnail">
+          <img [src]="imageURL">
+        </ion-card>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+
+    <ion-row radio-group *ngIf="!showTakePicture" [(ngModel)]="analyzeMode">
+      <ion-col text-center>
+        <ion-label>صحنه</ion-label>
+        <ion-radio checked="false" value="label"></ion-radio>
+      </ion-col>
+      <ion-col text-center>
+        <ion-label>چهره</ion-label>
+        <ion-radio checked="false" value="face"></ion-radio>
+      </ion-col>
+      <ion-col text-center>
+        <ion-label>بازیگران</ion-label>
+        <ion-radio checked="false" value="celeb" disabled></ion-radio>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!showTakePicture">
+      <ion-col></ion-col>
+      <ion-col>
+        <button ion-button round (tap)="analyzePhoto(analyzeMode)">تحلیل تصویر&nbsp;&nbsp;&nbsp;
+          <ion-icon name="search"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 1vh"></ion-row>
+
+    <!--**********************************************RESULTS************************************************-->
+
+    <ion-grid *ngIf="labelResults">
+      <ion-row *ngFor="let item of labelResults">
+        <ion-col></ion-col>
+        <ion-col text-right>
+          <ion-badge color="secondary">{{item.Name}}</ion-badge>
+        </ion-col>
+        <ion-col text-left>
+          <ion-badge color="primary">{{item.Confidence.toFixed(2)}}</ion-badge>
+        </ion-col>
+        <ion-col></ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="faceResults">
+      <ion-grid *ngFor="let face of faceResults">
+        <ion-row *ngFor="let emotion of face.Emotions">
+          <ion-col text-right>
+            <ion-badge color="secondary">{{emotion.Type}}</ion-badge>
+          </ion-col>
+          <ion-col text-center>
+            <img [src]="'assets/imgs/emotions/'+emotion.Type+'.png'" style="width: 10vw">
+          </ion-col>
+          <ion-col text-left>
+            <ion-badge color="primary">{{emotion.Confidence.toFixed(2)}}&nbsp;&nbsp;%</ion-badge>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-grid>
+  </ion-grid>
+
+
 </ion-content>

@@ -1,6 +1,5 @@
 // http://ionicframework.com/docs/theming/
 
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +13,27 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@font-face {
+  font-family: IRANSans;
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/iranSans/IRANSansWeb(FaNum).eot');
+  src: url('../assets/fonts/iranSans/IRANSansWeb(FaNum).eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+  url('../assets/fonts/iranSans/IRANSansWeb(FaNum).woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+  url('../assets/fonts/iranSans/IRANSansWeb(FaNum).woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+  url('../assets/fonts/iranSans/IRANSansWeb(FaNum).ttf') format('truetype');
+}
+
+* {
+  direction: rtl;
+  font-family: IRANSans;
+}
+
+.toolbar-background-ios, .toolbar-background-md {
+  background-color: #4888ff;
+}
+
+.toolbar-title-md, .toolbar-title-ios, .bar-button-default-ios, .bar-button-default-md {
+  color: white;
+}
