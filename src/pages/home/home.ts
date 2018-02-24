@@ -3,6 +3,7 @@ import {Events, IonicPage, NavController, NavParams, Platform} from 'ionic-angul
 import {SpinnerDialog} from "@ionic-native/spinner-dialog";
 import {AwsServiceProvider} from "../../providers/aws-service/aws-service";
 import {CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions} from "@ionic-native/camera-preview";
+import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 /**
  * Generated class for the HomePage page.
@@ -27,6 +28,7 @@ export class HomePage {
   analyzeMode: string;
   testText: string = 'This is a test';
   param = {value: 'world'};
+  celebResults: any;
 
   constructor(public navCtrl: NavController,
               public events: Events,
@@ -34,6 +36,7 @@ export class HomePage {
               public platform: Platform,
               private spinnerDialog: SpinnerDialog,
               private cameraPreview: CameraPreview,
+              private iab: InAppBrowser,
               public navParams: NavParams) {
 
     events.subscribe('menu:opened', () => {
@@ -41,7 +44,9 @@ export class HomePage {
     });
 
     events.subscribe('menu:closed', () => {
-      cameraPreview.show();
+      if (this.showTakePicture) {
+        cameraPreview.show();
+      }
     });
 
   }
@@ -53,6 +58,7 @@ export class HomePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+
 
   }
 
@@ -127,6 +133,7 @@ export class HomePage {
     this.spinnerDialog.show();
     this.labelResults = null;
     this.faceResults = null;
+    this.celebResults = null;
     if (!mode) {
       this.spinnerDialog.hide();
       alert('لطفا یکی از گزینه ها را انتخاب کنید...');
@@ -152,9 +159,18 @@ export class HomePage {
         });
         break;
       case 'celeb':
+        this.Aws.celebrityDetect(this.imageData).then(res => {
+          this.celebResults = res.CelebrityFaces;
+          this.spinnerDialog.hide();
+        }, (err) => {
+          alert('Component Error:' + err);
+        });
         break;
     }
 
   }
 
+  openLink(url: string) {
+    this.iab.create('http://' + url);
+  }
 }

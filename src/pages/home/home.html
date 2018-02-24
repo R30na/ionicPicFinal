@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>خانه</ion-title>
+    <ion-title>{{"HOME" | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -30,39 +30,38 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col></ion-col>
+      <ion-col>&nbsp;</ion-col>
       <ion-col text-center padding>
         <ion-card *ngIf="!showTakePicture" class="thumbnail">
-          <img [src]="imageURL">
+          <img id="image" [src]="imageURL">
         </ion-card>
       </ion-col>
-      <ion-col></ion-col>
+      <ion-col>&nbsp;</ion-col>
     </ion-row>
 
 
     <ion-row radio-group *ngIf="!showTakePicture" [(ngModel)]="analyzeMode">
       <ion-col text-center>
-        <ion-label>صحنه</ion-label>
+        <ion-label>{{"SCENE" | translate}}</ion-label>
         <ion-radio checked="false" value="label"></ion-radio>
       </ion-col>
       <ion-col text-center>
-        <ion-label>چهره</ion-label>
+        <ion-label>{{"FACE" | translate}}</ion-label>
         <ion-radio checked="false" value="face"></ion-radio>
       </ion-col>
       <ion-col text-center>
-        <ion-label>بازیگران</ion-label>
-        <ion-radio checked="false" value="celeb" disabled></ion-radio>
+        <ion-label>{{"CELEB" | translate}}</ion-label>
+        <ion-radio checked="false" value="celeb"></ion-radio>
       </ion-col>
     </ion-row>
 
     <ion-row *ngIf="!showTakePicture">
-      <ion-col></ion-col>
+      <ion-col>&nbsp;</ion-col>
       <ion-col>
-        <button ion-button round (tap)="analyzePhoto(analyzeMode)">تحلیل تصویر&nbsp;&nbsp;&nbsp;
-          <ion-icon name="search"></ion-icon>
+        <button ion-button round (tap)="analyzePhoto(analyzeMode)">{{"IA" | translate}}<ion-icon name="search"></ion-icon>
         </button>
       </ion-col>
-      <ion-col></ion-col>
+      <ion-col>&nbsp;</ion-col>
     </ion-row>
 
     <ion-row style="margin-top: 1vh"></ion-row>
@@ -71,14 +70,14 @@
 
     <ion-grid *ngIf="labelResults">
       <ion-row *ngFor="let item of labelResults">
-        <ion-col></ion-col>
+        <ion-col>&nbsp;</ion-col>
         <ion-col text-right>
           <ion-badge color="secondary">{{item.Name}}</ion-badge>
         </ion-col>
         <ion-col text-left>
           <ion-badge color="primary">{{item.Confidence.toFixed(2)}}</ion-badge>
         </ion-col>
-        <ion-col></ion-col>
+        <ion-col>&nbsp;</ion-col>
       </ion-row>
     </ion-grid>
 
@@ -95,8 +94,27 @@
             <ion-badge color="primary">{{emotion.Confidence.toFixed(2)}}&nbsp;&nbsp;%</ion-badge>
           </ion-col>
         </ion-row>
+        <div style="border-top: 1px solid blue"></div>
       </ion-grid>
     </ion-grid>
+  </ion-grid>
+
+  <ion-grid *ngIf="celebResults">
+    <ion-row *ngFor="let celeb of celebResults" style="height: 10vh">
+      <ion-col text-center class="flex">
+        <ion-badge color="secondary">{{celeb.Name}}</ion-badge>
+      </ion-col>
+      <ion-col text-center class="flex">
+        <ion-badge color="primary">{{celeb.MatchConfidence.toFixed(2)}}</ion-badge>
+      </ion-col>
+      <ion-col text-center *ngIf="celeb.Urls" class="flex">
+        <ion-fab (tap)="openLink(celeb.Urls[0])">
+          <button ion-fab mini>
+            <ion-icon name="information-circle"></ion-icon>
+          </button>
+        </ion-fab>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 
 

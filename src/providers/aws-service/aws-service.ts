@@ -76,4 +76,24 @@ export class AwsServiceProvider {
     });
   }
 
+  celebrityDetect(imageData): Promise<any> {
+
+    return new Promise(resolve => {
+      let params = {
+        Image: {
+          Bytes: this.base64ToArrayBuffer(imageData)
+        }
+      };
+      this.rekognition.recognizeCelebrities(params, function (err, data) {
+        if (err) {
+          alert('Service Error: ' + err);
+        }
+        if (data) {
+          resolve(data);
+        }
+      });
+    });
+
+  }
+
 }

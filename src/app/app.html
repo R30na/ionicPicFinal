@@ -1,17 +1,43 @@
 <ion-menu [content]="content" side="right" (ionOpen)="menuOpened()" (ionClose)="menuClosed()">
   <ion-header>
     <ion-toolbar>
-      <ion-title>منو</ion-title>
+      <ion-title>{{'MENU' | translate}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+      <!--<button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">-->
+        <!--{{p.title | translate}}-->
+      <!--</button>-->
+      <button menuClose ion-item (click)="openPage('HomePage')">
+        {{"HOME" | translate}}
+      </button>
+      <button menuClose ion-item  (click)="openPage('AboutPage')">
+        {{"ABOUT" | translate}}
+      </button>
+      <button menuClose ion-item  (click)="openPage('SettingsPage')">
+        {{"SETTINGS" | translate}}
       </button>
     </ion-list>
   </ion-content>
+
+
+
+
+  <!--<ion-content>-->
+  <!--<ion-list>-->
+  <!--<ion-label> EN </ion-label>-->
+  <!--<ion-toggle [(ngModel)]="language" (change)="changeLanguage()"></ion-toggle>-->
+  <!--</ion-list>-->
+  <!--</ion-content>-->
+
+  <!--<ion-content>-->
+  <!--<ion-list>-->
+  <!--<ion-title>{{'HELLO' | translate}}</ion-title>-->
+  <!--</ion-list>-->
+  <!--</ion-content>-->
+
 
 </ion-menu>
 

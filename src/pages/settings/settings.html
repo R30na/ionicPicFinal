@@ -1,0 +1,33 @@
+<!--
+  Generated template for the SettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-buttons end>
+      <button ion-button (tap)="saveSettings()">
+        <ion-icon name="md-checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{"SETTINGS" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-item>
+    <ion-label>{{"LANG" | translate}}</ion-label>
+    <ion-select [(ngModel)]="language" interface="action-sheet" okText="OK" cancelText="Cancel">
+      <ion-option value="en">Engish</ion-option>
+      <ion-option value="fa">فارسی</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <!--<ion-item>{{ 'ABOUT' | translate }}</ion-item>-->
+
+</ion-content>
